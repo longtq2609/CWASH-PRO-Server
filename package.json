@@ -1,6 +1,6 @@
 {
-  "name": "server",
-  "version": "0.0.0",
+  "name": "cwsh-pro",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www"
@@ -22,5 +22,17 @@
     "jsonwebtoken": "^8.5.1",
     "md5": "^2.3.0"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "description": "Sever CWASH-PRO",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/longtq2609/Server_CWASH-PRO.git"
+  },
+  "author": "Longtq",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/longtq2609/Server_CWASH-PRO/issues"
+  },
+  "homepage": "https://github.com/longtq2609/Server_CWASH-PRO#readme"
 }
