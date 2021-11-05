@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-let dev_db_url = 'mongodb+srv://Duan:123456zx@cluster0.0p9mo.mongodb.net/test?retryWrites=true&w=majority';
+let dev_db_url = 'mongodb+srv://hungdieu123:Abc123@cluster0.pew6s.mongodb.net/test';
 let mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, {
     useNewUrlParser: true,
