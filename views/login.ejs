@@ -1,53 +1,59 @@
 <!------ Include the above in your HEAD tag ---------->
 
-<div class="header">
-    <img src="/images/logo.png" class="img-logoHeader">
-</div>
-<div class="container view">
-    <div class="wrap-body">
-        <div class="body-left">
-            <form action="/login" method="post">
-            <h3>Đăng Nhập</h3>
-            <p class="sub_text">Nhập tài khoản và mật khẩu để đăng nhập hệ thống</p>
-            <div class="wrap_input">
-                <p class="text_login"><mark class="red">*</mark> Tài khoản</p>
-                <div class="wrap_login ">
-                    <input type="text" class="form-control" name="phoneNumber" placeholder="Nhập Email">
-                </div>
-            </div>
-            <div class="wrap_input">
-                <div class="wrap_pass">
-                    <p class="text_pass"><mark>*</mark> Mật Khẩu</p>
-                    <p class="text_forgot">Quên mật khẩu?</p>
-                </div>
-                <div class="wrap_password ">
-                    <input type="password" name="passWord" class="form-control" >
-                </div>
-                <% if (err){ %>
-                    <div class="alert alert-danger" role="alert">
-                        <%=message%>
+<div class="container-fluid" style="height: 100%;padding: 0px">
+    <div class="header">
+        <img src="/images/logo.png" class="logo">
+    </div>
+    <div class="container view">
+        <div class="wrap-body">
+            <div class="body-left">
+                <form action="/login" method="post">
+                    <h3 class="title">Đăng Nhập</h3>
+                    <p class="sub_text">Nhập tài khoản và mật khẩu để đăng nhập hệ thống</p>
+
+                    <div class="wrap_input">
+                        <p class="text_login"><mark class="red">*</mark> Tài khoản</p>
+                        <div class="wrap_login ">
+                            <input type="text" class="form-controll" name="phoneNumber" placeholder="Nhập Email">
+                        </div>
                     </div>
-                    <% } %>
-                <div class="form-group">
-                    <input type="submit" value="Login" class="btn float-right login_btn">
-                </div>
+                    <div class="wrap_input">
+                        <div class="wrap_pass">
+                            <p class="text_pass"><mark>*</mark> Mật Khẩu</p>
+                        </div>
+                        <div class="wrap_password ">
+                            <input type="password" name="passWord" class="form-controll" placeholder="Mật khẩu">
+                        </div>
+                        <% if (err){ %>
+                            <div class="alert alert-danger" role="alert">
+                                <%=message%>
+                            </div>
+                            <% } %>
+                                <div class="form-group">
+                                    <input type="submit" value="Login" class="btn float-right login_btn">
+                                </div>
+                    </div>
+                </form>
             </div>
-        </form>
-        </div>
-        <div class="body-right">
-            <img src="/images/panner-login.svg" class="img-panner">
+            <div class="body-right">
+                <img src="/images/panner-login.svg" class="img-panner">
+            </div>
         </div>
     </div>
 </div>
 
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
-    html, body {
+
+    html,
+    body {
         height: 100%;
     }
+
     .wrap-body {
         display: flex;
     }
+
     .body-left {
         width: 50%;
         background-color: #FFFFFF;
@@ -56,57 +62,82 @@
         border-radius: 7px;
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     }
+
     .body-right {
         width: 50%;
         display: flex;
         padding: 3%;
     }
+
     .img-panner {
         width: 100%;
     }
+
     .sub_text {
         color: #626F95;
         size: 12px;
         line-height: 16.34px;
-        margin-bottom: 25px;
+        margin-bottom: 35px;
+        margin-top: 12px;
     }
+
     .text_login {
         size: 13px;
         color: #2A2A2A;
         line-height: 15.23px;
-    margin-bottom: 5px;    }
+        margin-bottom: 10px;
+    }
+
     .wrap_login {
         width: 100%;
         display: flex;
+        margin-bottom: 20px;
     }
-    .form-control {
+
+    .form-controll {
         width: 100%;
         border: 1px solid #EDF2F9;
         color: #72849A;
-        padding-left: 10%;
+        padding: 1.5% 10%;
+        border-radius: 5px;
     }
-  
+
+    .form-controll:focus {
+        background: transparent;
+        width: 100%;
+        border: 1px solid #EDF2F9;
+        box-shadow: transparent;
+        color: #72849A;
+        outline: 0px;
+    }
+
     mark {
         color: red;
         background-color: transparent;
     }
+
     .wrap_pass {
         display: flex;
         justify-content: space-between
     }
+
     .wrap_input {
         margin-bottom: 15px
     }
+
     .text_pass {
-        margin-bottom: 5px;
+        margin-bottom: 10px;
         color: #2A2A2A;
     }
+
     .text_forgot {
         margin: 0px
     }
+
     .wrap_password {
         margin-bottom: 20px;
     }
+
     .view {
         display: flex;
         flex-direction: column;
@@ -114,6 +145,7 @@
         font-family: 'Open Sans', sans-serif;
         height: 100%;
     }
+
     .login_btn {
         color: black;
         background-color: #FFC312;
@@ -124,10 +156,21 @@
         color: black;
         background-color: #FFC312;
     }
+
     .header {
         width: 100%;
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
         background: fixed;
+        padding: 15px 30px;
+        position: fixed;
+    }
 
+    .logo {
+        width: 75px;
+    }
+    .title {
+        font-weight: 700;
+        line-height: 27.24px;
+        font-size: 27px;
     }
 </style>
