@@ -14,6 +14,7 @@
                     <div class="wrap_input">
                         <p class="text_login"><mark class="red">*</mark> Tài khoản</p>
                         <div class="wrap_login ">
+                            <img src="/images/img_user.svg" class="icon">
                             <input type="text" class="form-controll" name="phoneNumber" placeholder="Nhập Email">
                         </div>
                     </div>
@@ -22,7 +23,9 @@
                             <p class="text_pass"><mark>*</mark> Mật Khẩu</p>
                         </div>
                         <div class="wrap_password ">
+                            <img src="/images/img_pass.svg" class="icon">
                             <input type="password" name="passWord" class="form-controll" placeholder="Mật khẩu">
+                            <img src="/images/img_hide.svg" class="icon_hide">
                         </div>
                         <% if (err){ %>
                             <div class="alert alert-danger" role="alert">
@@ -48,6 +51,20 @@
     html,
     body {
         height: 100%;
+    }
+
+    .icon {
+        position: absolute;
+        margin-top: 11px;
+        margin-left: 15px;
+        width: 16px;
+    }
+
+    .icon_hide {
+        position: absolute;
+        margin-top: 11px;
+        right: 54%;
+        width: 20px;
     }
 
     .wrap-body {
@@ -168,6 +185,7 @@
     .logo {
         width: 75px;
     }
+
     .title {
         font-weight: 700;
         line-height: 27.24px;
