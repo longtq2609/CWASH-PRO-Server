@@ -3,7 +3,7 @@ let jwt = require('jsonwebtoken')
 let cron = require('cron')
 let uniqid = require('uniqid')
 let fs = require('fs')
-let admin = require("firebase-admin")
+var admin = require("firebase-admin");
 
 let User = require('../model/User')
 let New = require('../model/New')
@@ -12,7 +12,7 @@ let Vehicle = require('../model/Vehicle')
 let Service = require('../model/Service')
 let Notify = require('../model/Notify')
 let Statistic = require('../model/Statistic')
-let serviceAccount = require("../datn-iwash-firebase-adminsdk-a30tb-8e2250e463.json")
+let serviceAccount = require("../cwash-pro-firebase-adminsdk-t1jfq-1c1005f876.json")
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
