@@ -263,21 +263,20 @@ module.exports.schedule = async (req, res) => {
     let schedule = await Schedule.findOne({idUser, status: "Pending"})
     if (schedule) {
         notify('Thất bại', 'Bạn phải chờ lịch của bạn hoàn thành để đặt tiếp', req.user.tokenDevice)
-        res.json({success: false, message: 'Bạn phải chờ lịch của bạn hoàn thành để đặt tiếp'})
-        return
+        return res.json({success: false, message: 'Bạn phải chờ lịch của bạn hoàn thành để đặt tiếp'})
     }
-    let staff = await User.find({role: 'Staff'})
-    if (!staff) {
-        res.json({success: false, message: 'Không tìm thấy nhân viên'})
-        return
+    let staffs = await User.find({role: 'Staff'})
+    if (!staffs) {
+        return res.json({success: false, message: 'Không tìm thấy nhân viên'})
+
     }
     let timeBook = req.body.timeBook
     let vehicle = req.body.vehicle
     let services = req.body.service
     let slSchedule = await Schedule.find({timeBook, status: "Pending"})
-    if (slSchedule.length >= staff.length) {
-        res.json({success: false, message: 'Khung giờ này đã đầy'})
-        return
+    if (slSchedule.length >= staffs.length) {
+        return res.json({success: false, message: 'Khung giờ này đã đầy'})
+
     }
     let hour = timeBook.split('@')[0].split(':')[0].trim()
     let min = timeBook.split('@')[0].split(':')[1].trim()
@@ -288,6 +287,11 @@ module.exports.schedule = async (req, res) => {
         if (resolve) {
             cronJob(idUser, hour, min, day, month)
             notify('Thành công', 'Lịch của bạn đã được đặt. Vui lòng mang xe tới đúng giờ', req.user.tokenDevice)
+            for (let staff of staffs) {
+                if (staff.tokenDevice != null && staff.tokenDevice.length > 0) {
+                    notify('Thông báo khách hàng đặt lịch', `Khách hàng đã đặt lịch rửa xe lúc ${timeBook}`, staff.tokenDevice)
+                }
+            }
             addNotify(`Lịch của bạn đã được đặt thành công`, idUser, resolve._id);
             res.json({success: true, message: `Đặt lịch thành công`})
         } else if (reject) {
@@ -297,7 +301,9 @@ module.exports.schedule = async (req, res) => {
 }
 
 module.exports.cancelSchedule = async (req, res) => {
-    let user = await User.findById(req.user.id)
+    // let user = await User.findById(req.user.id)
+    let user = await User.find({role: 'Customer'})
+
     if (!user) {
         res.json({success: false, message: 'Không nhận dạng được người dùng. Vui lòng đăng nhập lại!'})
         return
@@ -317,6 +323,11 @@ module.exports.cancelSchedule = async (req, res) => {
             {status: 'Cancelled', note, idStaffConfirm: user._id, timeConfirm: new Date()}
     }, {new: true}).then((schedule) => {
         notify('Xin lỗi', 'Lịch của bạn đã bị hủy', req.user.tokenDevice)
+        for (let staff of user) {
+            if (staff.tokenDevice != null && staff.tokenDevice.length > 0) {
+                notify('Xin lỗi', 'Lịch của bạn đã bị hủy', staff.tokenDevice)
+            }
+        }
         addNotify(`Lịch của bạn đã bị hủy`, schedule.idUser, schedule._id)
         res.json({success: true, message: `Hủy lịch thành công`})
     }, (err) => {
@@ -327,7 +338,8 @@ module.exports.cancelSchedule = async (req, res) => {
 }
 
 module.exports.confirmSchedule = async (req, res) => {
-    let user = await User.findById(req.user.id)
+    let user = await User.find({role: 'Customer'})
+    // let user = await User.findById(req.user.id)
     if (!user) {
         res.json({success: false, message: 'Không nhận dạng được người dùng. Vui lòng đăng nhập lại!'})
         return
@@ -349,6 +361,11 @@ module.exports.confirmSchedule = async (req, res) => {
             idStaffConfirm: req.user.id
         }
     }, {new: true}).then((schedu) => {
+        for (let staff of user) {
+            if (staff.tokenDevice != null && staff.tokenDevice.length > 0) {
+                notify('Thông báo', 'Lịch của bạn đang được thực hiện', staff.tokenDevice)
+            }
+        }
         addNotify(`Lịch của bạn đang được thực hiện`, schedu.idUser, schedu._id)
         res.json({success: true, message: `Đã xác nhận thành công`})
     }, (err) => {
@@ -359,7 +376,9 @@ module.exports.confirmSchedule = async (req, res) => {
 }
 
 module.exports.completeSchedule = async (req, res) => {
-    let user = await User.findById(req.user.id)
+    let user = await User.find({role: 'Customer'})
+
+   // let user = await User.findById(req.user.id)
     if (!user) {
         res.json({success: false, message: 'Không nhận dạng được người dùng. Vui lòng đăng nhập lại!'})
         return
@@ -369,7 +388,7 @@ module.exports.completeSchedule = async (req, res) => {
         res.json({success: false, message: 'Không tìm thấy lịch đặt. Vui lòng thử lại!'})
         return
     }
-    if (schedule.vehicleStatus === false) {
+    if (schedule.vehicleStatus === true) {
         res.json({success: false, message: 'Người dùng chưa lấy xe, bạn không thể xác nhận lịch đã hoàn thành!'})
         return
     }
@@ -386,6 +405,11 @@ module.exports.completeSchedule = async (req, res) => {
             status: 'Completed'
         }
     }, {new: true}).then((schedu) => {
+        for (let staff of user) {
+            if (staff.tokenDevice != null && staff.tokenDevice.length > 0) {
+                notify('Thông báo', 'Lịch của bạn đã hoàn thành', staff.tokenDevice)
+            }
+        }
         notify('Xong rồi!', 'Dịch vụ của bạn đã hoàn thành', req.user.tokenDevice)
         addNotify(`Dịch vụ của bạn đã hoàn thành`, user._id, schedu._id)
         res.json({success: true, message: `Đã hoàn thành`})
@@ -415,6 +439,7 @@ module.exports.confirmVehicleStatus = async (req, res) => {
             vehicleStatus: true
         }
     }, {new: true}).then((schedu) => {
+        //Cái này sai logic
         notify('Xong rồi!', 'Bạn xác nhận đã lấy xe thành công', req.user.tokenDevice)
         addNotify(`Bạn đã lấy xe thành công`, schedu.idUser, schedu._id)
         res.json({success: true, message: 'Đã lấy xe'})

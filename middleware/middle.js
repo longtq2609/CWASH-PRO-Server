@@ -5,8 +5,7 @@ module.exports.checkLogin = (req, res, next) => {
     if (req.headers.authorization) {
         jwt.verify(req.headers.authorization, 'duan', (err, decoded) => {
            if (err) {
-               res.json({success: false, message: err})
-               return;
+               return res.json({success: false, message: err})
            } else if (decoded){
                req.user = decoded;
                next();
