@@ -312,7 +312,8 @@ module.exports.confirm = async (req, res) => {
             })
             return
         }
-        let schedule = await Schedule.findById(req.query.id);
+        let schedule = await Schedule.findById(req.query.id).populate('idUser');
+
         if (!schedule) {
             res.render('error/404', {
                 layout: 'temp/index',
@@ -340,6 +341,7 @@ module.exports.confirm = async (req, res) => {
                 note
             }
         }, {new: true}).then((schedu) => {
+            apiController.notify('Thông báo', 'Lịch của bạn đã bị huỷ', schedule.idUser.tokenDevice)
             apiController.addNotify(`Lịch của bạn đã bị hủy`, schedu.idUser, schedu._id)
             res.redirect('/schedules?status=Pending')
         }, (err) => {
@@ -358,7 +360,7 @@ module.exports.confirm = async (req, res) => {
             })
             return
         }
-        let schedule = await Schedule.findById(req.query.id);
+        let schedule = await Schedule.findById(req.query.id).populate('idUser');
         if (!schedule) {
             res.render('error/404', {
                 layout: 'temp/index',
@@ -382,6 +384,7 @@ module.exports.confirm = async (req, res) => {
                 status: 'Completed'
             }
         }, {new: true}).then((schedu) => {
+            apiController.notify('Thông báo', 'Lịch của bạn đã hoàn thành', schedule.idUser.tokenDevice)
             apiController.addNotify(`Dịch vụ của bạn đã hoàn thành`, schedu.idUser, schedu._id)
             res.redirect('/schedules?status=Confirmed')
         }, (err) => {
