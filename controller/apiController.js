@@ -446,7 +446,7 @@ module.exports.updateInfoUser = async (req, res) => {
     let avatar = user.avatar
     if (req.files) {
         try {
-            if (user.avatar != 'images/img.png') {
+            if (user.avatar !== 'images/img.png') {
                 fs.unlinkSync(`./uploads/${user.avatar}`)
             }
         } catch (e) {
