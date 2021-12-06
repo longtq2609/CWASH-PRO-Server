@@ -308,7 +308,7 @@ module.exports.cancelSchedule = async (req, res) => {
         res.json({success: false, message: 'Không tìm thấy lịch đặt. Vui lòng thử lại!'})
         return
     }
-    if (user.role == 'Customer' && req.user.id != schedule.idUser) {
+    if (user.role === 'Customer' && req.user.id !== schedule.idUser) {
         res.json({success: false, message: 'Bạn chỉ được hủy lịch của mình'})
         return
     }
