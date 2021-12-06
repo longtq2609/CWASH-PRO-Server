@@ -382,6 +382,7 @@ module.exports.confirm = async (req, res) => {
                 status: 'Completed'
             }
         }, {new: true}).then((schedu) => {
+            apiController.notify('Xong rồi', 'Xong rồi địt mẹ m ', schedule.idUser.tokenDevice)
             apiController.addNotify(`Dịch vụ của bạn đã hoàn thành`, schedu.idUser, schedu._id)
             res.redirect('/schedules?status=Confirmed')
         }, (err) => {
