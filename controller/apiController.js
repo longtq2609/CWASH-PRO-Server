@@ -13,8 +13,6 @@ let Service = require('../model/Service')
 let Notify = require('../model/Notify')
 let Statistic = require('../model/Statistic')
 let serviceAccount = require("../cwash-pro-firebase-adminsdk-t1jfq-1c1005f876.json")
-const {use} = require("express/lib/router");
-const {models} = require("mongoose");
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
@@ -390,7 +388,7 @@ module.exports.completeSchedule = async (req, res) => {
         res.json({success: false, message: 'Không tìm thấy lịch đặt. Vui lòng thử lại!'})
         return
     }
-    if (schedule.vehicleStatus === false) {
+    if (schedule.vehicleStatus == false) {
         res.json({success: false, message: 'Người dùng chưa lấy xe, bạn không thể xác nhận lịch đã hoàn thành!'})
         return
     }
