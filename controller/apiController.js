@@ -13,6 +13,8 @@ let Service = require('../model/Service')
 let Notify = require('../model/Notify')
 let Statistic = require('../model/Statistic')
 let serviceAccount = require("../cwash-pro-firebase-adminsdk-t1jfq-1c1005f876.json")
+const {use} = require("express/lib/router");
+const {models} = require("mongoose");
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
@@ -270,6 +272,7 @@ module.exports.schedule = async (req, res) => {
         return res.json({success: false, message: 'Không tìm thấy nhân viên'})
 
     }
+
     let timeBook = req.body.timeBook
     let vehicle = req.body.vehicle
     let services = req.body.service
@@ -278,10 +281,10 @@ module.exports.schedule = async (req, res) => {
         return res.json({success: false, message: 'Khung giờ này đã đầy'})
 
     }
-    let hour = timeBook.split('@')[0].split(':')[0].trim()
-    let min = timeBook.split('@')[0].split(':')[1].trim()
-    let day = timeBook.split('@')[1].split('/')[0].trim()
-    let month = timeBook.split('@')[1].split('/')[1].trim() - 1
+    let hour = timeBook.split('-')[0].split(':')[0].trim()
+    let min = timeBook.split('-')[0].split(':')[1].trim()
+    let day = timeBook.split('-')[1].split('/')[0].trim()
+    let month = timeBook.split('-')[1].split('/')[1].trim() - 1
     let add = new Schedule({idUser, timeBook, vehicle, services})
     add.save().then((resolve, reject) => {
         if (resolve) {
@@ -289,7 +292,7 @@ module.exports.schedule = async (req, res) => {
             notify('Thành công', 'Lịch của bạn đã được đặt. Vui lòng mang xe tới đúng giờ', req.user.tokenDevice)
             for (let staff of staffs) {
                 if (staff.tokenDevice != null && staff.tokenDevice.length > 0) {
-                    notify('Thông báo khách hàng đặt lịch', `Khách hàng đã đặt lịch rửa xe lúc ${timeBook}`, staff.tokenDevice)
+                    notify('Thông báo khách hàng đặt lịch', `Khách hàng tên ${nameUser} đã đặt lịch rửa xe lúc ${timeBook}`, staff.tokenDevice)
                 }
             }
             addNotify(`Lịch của bạn đã được đặt thành công`, idUser, resolve._id);
@@ -336,7 +339,6 @@ module.exports.cancelSchedule = async (req, res) => {
         res.json({success: false, message: err})
     })
 }
-
 module.exports.confirmSchedule = async (req, res) => {
     let user = await User.find({role: 'Customer'})
     // let user = await User.findById(req.user.id)
@@ -388,7 +390,7 @@ module.exports.completeSchedule = async (req, res) => {
         res.json({success: false, message: 'Không tìm thấy lịch đặt. Vui lòng thử lại!'})
         return
     }
-    if (schedule.vehicleStatus === true) {
+    if (schedule.vehicleStatus === false) {
         res.json({success: false, message: 'Người dùng chưa lấy xe, bạn không thể xác nhận lịch đã hoàn thành!'})
         return
     }
