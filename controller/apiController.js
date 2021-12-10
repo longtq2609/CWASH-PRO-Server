@@ -279,10 +279,10 @@ module.exports.schedule = async (req, res) => {
         return res.json({success: false, message: 'Khung giờ này đã đầy'})
 
     }
-    let hour = timeBook.split('-')[0].split(':')[0].trim()
-    let min = timeBook.split('-')[0].split(':')[1].trim()
-    let day = timeBook.split('-')[1].split('/')[0].trim()
-    let month = timeBook.split('-')[1].split('/')[1].trim() - 1
+    let hour = timeBook.split('@')[0].split(':')[0].trim()
+    let min = timeBook.split('@')[0].split(':')[1].trim()
+    let day = timeBook.split('@')[1].split('/')[0].trim()
+    let month = timeBook.split('@')[1].split('/')[1].trim() - 1
     let add = new Schedule({idUser, timeBook, vehicle, services})
     add.save().then((resolve, reject) => {
         if (resolve) {
@@ -290,7 +290,7 @@ module.exports.schedule = async (req, res) => {
             notify('Thành công', 'Lịch của bạn đã được đặt. Vui lòng mang xe tới đúng giờ', req.user.tokenDevice)
             for (let staff of staffs) {
                 if (staff.tokenDevice != null && staff.tokenDevice.length > 0) {
-                    notify('Thông báo khách hàng đặt lịch', `Khách hàng tên ${nameUser} đã đặt lịch rửa xe lúc ${timeBook}`, staff.tokenDevice)
+                    notify('Thông báo khách hàng đặt lịch', `Có khách hàng đã đặt lịch rửa xe lúc ${timeBook}`, staff.tokenDevice)
                 }
             }
             addNotify(`Lịch của bạn đã được đặt thành công`, idUser, resolve._id);
