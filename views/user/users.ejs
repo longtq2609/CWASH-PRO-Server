@@ -12,29 +12,29 @@
                         <div class="col-lg-3">Hành động</div>
                     </div>
                     <% for (let i = 0; i < data.length; i++) { %>
-                        <div class="row it ">
-                            <div class="col-lg-3">
-                                <img src="/<%= data[i].avatar %>" class="img" alt="Mazda hatchback" style="margin-right: 10px;">
-                                <%= data[i].fullName %>
+                            <div class="container">
+                                <div class="row it ">
+                                    <div class="col-lg-3">
+                                        <img src="/<%= data[i].avatar %>" class="img" alt="Loading error" style="margin-right: 10px;">
+                                        <%= data[i].fullName %>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <% if (data[i].role=="Customer" ) { %>Khách hàng
+                                            <% } else if (data[i].role=="Staff" ) { %> Nhân viên
+                                                <% } else if (data[i].role=="Admin" ) { %> Quản lý
+                                                    <% } %>
+                                    </div>
+                                    <div class="col-lg-3"><%= data[i].phoneNumber %></div>
+                                    <div class="col-lg-3">
+                                        <a href="/users/update-user/<%= data[i]._id %>" class="btn "><img src="/images/edit.svg" alt=""></a>
+                                        <button data-toggle="modal" data-target="#d<%= data[i]._id %>" class="btn "><img src="/images/delete.svg" alt="">
+                                        </button>
+                                        <a href="/users/<%= data[i]._id %>/vehicles" class="btn btn-info">Danh sách xe</a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-lg-3">
-                                <% if (data[i].role=="Customer" ) { %>Khách hàng
-                                    <% } else if (data[i].role=="Staff" ) { %> Nhân viên
-                                        <% } else if (data[i].role=="Admin" ) { %> Quản lý
-                                            <% } %>
-                            </div>
-                            <div class="col-lg-3"><%= data[i].phoneNumber %></div>
-                            <div class="col-lg-3">
-                                <a href="/users/update-user/<%= data[i]._id %>" class="btn "><img src="/images/edit.svg" alt=""></a>
-                                <button data-toggle="modal" data-target="#d<%= data[i]._id %>" class="btn "><img src="/images/delete.svg" alt="">
-                                </button>
-                                <a href="/users/<%= data[i]._id %>/vehicles" class="btn btn-info">Danh sách xe</a>
-                            </div>
-                        </div>
+                        
                 </div>
-
-                
-
                 <!--                modal delete-->
 
                 <div class="modal fade" id="d<%= data[i]._id %>" tabindex="-1" role="dialog"
@@ -62,7 +62,7 @@
 <style>
     .img {
         border-radius: 50%;
-        width: 50px;
+        max-width: 50px;
     }
     .it {
         padding-bottom: 15px;
@@ -71,6 +71,9 @@
         justify-content: center;
         align-items: center;
         border-bottom: 1px solid #c5c7c9;
+    }
+    .container {
+        padding: 0px;
     }
 </style> 
 
