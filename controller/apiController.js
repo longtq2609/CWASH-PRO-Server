@@ -470,18 +470,7 @@ module.exports.updateInfoUser = async (req, res) => {
     let address = req.body.address.substring(1, req.body.address.length - 1)
     let avatar = user.avatar
     if (req.files) {
-        try {
-            if (user.avatar !== 'images/img.png') {
-                fs.unlinkSync(`./uploads/${user.avatar}`)
-            }
-        } catch (e) {
-            console.log(e)
-        }
-        avatar = req.files.avatar
-        let filename = "user/" + uniqid() + "-" + avatar.name
-        avatar.mv(`./uploads/${filename}`)
-        avatar = filename
-
+        avatar = Buffer.from(req.files.avatar.data).toString('base64')
     }
     await User.findOneAndUpdate({_id: req.user.id}, {
         $set: {

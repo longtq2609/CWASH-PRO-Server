@@ -136,13 +136,6 @@ module.exports.postAddUser = async (req, res) => {
 module.exports.deleteUser = async (req, res) => {
     let id = req.params.id;
     await User.findByIdAndDelete({_id: id}).then((user) => {
-        try {
-            if (user.avatar != 'images/img.png') {
-                fs.unlinkSync(`./uploads/${user.avatar}`);
-            }
-        } catch (e) {
-            console.log(e)
-        }
         res.redirect('/users');
     }, (err) => {
         res.render('error/404', {layout: 'temp/index', title: "Có lỗi xảy ra !", err: true, message: err})
@@ -212,18 +205,7 @@ module.exports.postUpdateUser = async (req, res) => {
         }
         let avatar = user.avatar;
         if (req.files) {
-            try {
-                if (user.avatar != 'images/img.png') {
-                    fs.unlinkSync(`./uploads/${user.avatar}`);
-                }
-            } catch (e) {
-                console.log(e)
-            }
-
-            avatar = req.files.avatar;
-            let filename = "user/" + uniqid() + "-" + avatar.name;
-            avatar.mv(`./uploads/${filename}`);
-            avatar = filename;
+            avatar = Buffer.from(req.files.avatar.data).toString('base64')
         }
         await User.findOneAndUpdate({_id: id}, {
             $set: {
