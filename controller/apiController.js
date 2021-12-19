@@ -422,6 +422,7 @@ module.exports.completeSchedule = async (req, res) => {
 
 module.exports.confirmVehicleStatus = async (req, res) => {
     let schedule = await Schedule.findById(req.params.id)
+    let staffs = await User.find({role: 'Staff'})
     if (!schedule) {
         res.json({success: false, message: 'Không tìm thấy lịch đặt. Vui lòng thử lại!'})
         return
@@ -439,7 +440,11 @@ module.exports.confirmVehicleStatus = async (req, res) => {
             vehicleStatus: true
         }
     }, {new: true}).then((schedu) => {
-        //Cái này sai logic
+        for (let staff of staffs) {
+            if (staff.tokenDevice != null && staff.tokenDevice.length > 0) {
+                notify('Thông báo khách hàng đã lấy xe', `Khách hàng đã lấy xe thành công`, staff.tokenDevice)
+            }
+        }
         notify('Xong rồi!', 'Bạn xác nhận đã lấy xe thành công', req.user.tokenDevice)
         addNotify(`Bạn đã lấy xe thành công`, schedu.idUser, schedu._id)
         res.json({success: true, message: 'Đã lấy xe'})
