@@ -1,8 +1,17 @@
 <!------ Include the above in your HEAD tag ---------->
-
+<script>
+    function myFunction() {
+    var x = document.getElementById("myInput");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  }
+</script>
 <div class="container-fluid" style="height: 100%;padding: 0px">
     <div class="header">
-        <img src="/images/logo.png" class="logo">
+        <img src="https://i.ibb.co/tLkNCrG/Logo.png" class="logo">
     </div>
     <div class="container view">
         <div class="wrap-body">
@@ -24,8 +33,9 @@
                         </div>
                         <div class="wrap_password ">
                             <img src="/images/img_pass.svg" class="icon">
-                            <input type="password" name="passWord" class="form-controll" placeholder="Mật khẩu">
-                            <img src="/images/img_hide.svg" class="icon_hide">
+                            <input type="password" name="passWord" class="form-controll" placeholder="Mật khẩu" id="myInput">
+                            <a  onclick="myFunction()">
+                                <img src="/images/img_hide.svg" class="icon_hide"></a>
                         </div>
                         <% if (err){ %>
                             <div class="alert alert-danger" role="alert">
