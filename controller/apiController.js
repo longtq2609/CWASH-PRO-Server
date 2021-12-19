@@ -304,6 +304,7 @@ module.exports.schedule = async (req, res) => {
 module.exports.cancelSchedule = async (req, res) => {
     // let user = await User.findById(req.user.id)
     let user = await User.find({role: 'Customer'})
+    let staffs = await User.find({role: 'Staff'})
 
     if (!user) {
         res.json({success: false, message: 'Không nhận dạng được người dùng. Vui lòng đăng nhập lại!'})
@@ -323,10 +324,14 @@ module.exports.cancelSchedule = async (req, res) => {
         $set:
             {status: 'Cancelled', note, idStaffConfirm: user._id, timeConfirm: new Date()}
     }, {new: true}).then((schedule) => {
-        notify('Xin lỗi', `Cửa hàng đã hủy lịch vì lý do ${note}`, req.user.tokenDevice)
+        for (let staff of staffs) {
+            if (staff.tokenDevice != null && staff.tokenDevice.length > 0) {
+                notify('Xin lỗi', `Khách hàng đã hủy lịch vì lý do ${note}`, req.user.tokenDevice)
+            }
+        }
         for (let staff of user) {
             if (staff.tokenDevice != null && staff.tokenDevice.length > 0) {
-                notify('Xin lỗi', `khách hàng đã hủy lịch vì lý do ${note}`, staff.tokenDevice)
+                notify('Xin lỗi', `Cửa hàng đã hủy lịch của bạn vì lý do ${note}`, staff.tokenDevice)
             }
         }
         addNotify(`Lịch của bạn đã bị hủy`, schedule.idUser, schedule._id)
