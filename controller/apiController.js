@@ -326,7 +326,7 @@ module.exports.cancelSchedule = async (req, res) => {
         notify('Xin lỗi', 'Lịch của bạn đã bị hủy', req.user.tokenDevice)
         for (let staff of user) {
             if (staff.tokenDevice != null && staff.tokenDevice.length > 0) {
-                notify('Xin lỗi', 'Lịch của bạn đã bị hủy', staff.tokenDevice)
+                notify('Xin lỗi', `Lịch của bạn đã bị hủy vì lý do ${note}`, staff.tokenDevice)
             }
         }
         addNotify(`Lịch của bạn đã bị hủy`, schedule.idUser, schedule._id)
