@@ -324,12 +324,12 @@ module.exports.cancelSchedule = async (req, res) => {
         $set:
             {status: 'Cancelled', note, idStaffConfirm: user._id, timeConfirm: new Date()}
     }, {new: true}).then((schedule) => {
+        // for (let staff of staffs) {
+        //     if (staff.tokenDevice != null && staff.tokenDevice.length > 0) {
+        //         notify('Xin lỗi', `Khách hàng đã hủy lịch vì lý do ${note}`, req.user.tokenDevice)
+        //     }
+        // }
         for (let staff of staffs) {
-            if (staff.tokenDevice != null && staff.tokenDevice.length > 0) {
-                notify('Xin lỗi', `Khách hàng đã hủy lịch vì lý do ${note}`, req.user.tokenDevice)
-            }
-        }
-        for (let staff of user) {
             if (staff.tokenDevice != null && staff.tokenDevice.length > 0) {
                 notify('Xin lỗi', `Lịch của bạn đã bị huỷ vì lý do ${note}`, staff.tokenDevice)
             }
