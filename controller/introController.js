@@ -39,7 +39,10 @@ module.exports.getAddIntro = (req, res) => {
 
 module.exports.postAddIntro = (req, res) => {
     let {title, description} = req.body;
-    image = Buffer.from(req.files.image.data).toString('base64')
+    let image = req.files.image;
+    let filename = "intro/" + uniqid() + "-" + image.name;
+    image.mv(`./uploads/${filename}`);
+    image = filename;
     let addIntro = new New({title, description, image});
     addIntro.save().then(() => {
         res.redirect('/introduces');
@@ -56,7 +59,15 @@ module.exports.postUpdateIntro = async (req, res) => {
         let {title, description, status} = req.body;
         let image = intro.image;
         if (req.files) {
-            image = Buffer.from(req.files.image.data).toString('base64')
+            image = req.files.image;
+            try {
+                fs.unlinkSync(`./uploads/${intro.image}`);
+            } catch (e) {
+                console.log(e)
+            }
+            let filename = "intro/" + uniqid() + "-" + image.name;
+            image.mv(`./uploads/${filename}`);
+            image = filename;
         }
         await New.findOneAndUpdate({_id: id}, {
             $set: {
@@ -79,6 +90,11 @@ module.exports.postUpdateIntro = async (req, res) => {
 module.exports.deleteIntro = async (req, res) => {
     let id = req.params.id;
     await New.findByIdAndDelete({_id: id}).then((intro) => {
+        try {
+            fs.unlinkSync(`./uploads/${intro.image}`);
+        } catch (e) {
+            console.log(e)
+        }
         res.redirect('/introduces');
     }, (err) => {
         res.render('error/404', {layout: 'temp/index', title: "Có lỗi xảy ra !", err: true, message: err})
