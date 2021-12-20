@@ -370,7 +370,7 @@ module.exports.confirmSchedule = async (req, res) => {
                 notify('Thông báo', 'Lịch của bạn đang được thực hiện', staff.tokenDevice)
             }
         }
-       // addNotify(`Lịch của bạn đang được thực hiện`, schedu.idUser, schedu._id)
+        // addNotify(`Lịch của bạn đang được thực hiện`, schedu.idUser, schedu._id)
         res.json({success: true, message: `Đã xác nhận thành công`})
     }, (err) => {
         res.json({success: false, message: err})
@@ -382,7 +382,7 @@ module.exports.confirmSchedule = async (req, res) => {
 module.exports.completeSchedule = async (req, res) => {
     let user = await User.find({role: 'Customer'})
 
-   // let user = await User.findById(req.user.id)
+    // let user = await User.findById(req.user.id)
     if (!user) {
         res.json({success: false, message: 'Không nhận dạng được người dùng. Vui lòng đăng nhập lại!'})
         return
@@ -414,7 +414,7 @@ module.exports.completeSchedule = async (req, res) => {
                 notify('Xong rồi', 'Dịch vụ của bạn đã hoàn thành', staff.tokenDevice)
             }
         }
-     //   notify('Xong rồi!', 'Dịch vụ của bạn đã hoàn thành', req.user.tokenDevice)
+        //   notify('Xong rồi!', 'Dịch vụ của bạn đã hoàn thành', req.user.tokenDevice)
         addNotify(`Dịch vụ của bạn đã hoàn thành`, user._id, schedu._id)
         res.json({success: true, message: `Đã hoàn thành`})
     }, (err) => {
