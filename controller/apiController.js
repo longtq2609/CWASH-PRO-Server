@@ -278,7 +278,7 @@ module.exports.schedule = async (req, res) => {
     if (slSchedule.length >= staffs.length) {
         return res.json({success: false, message: 'Khung giờ này đã đầy'})
     }
-    if(slSchedule.length >= 3){
+    if(slSchedule.length === 3){
         return res.json({success: false, message: 'Khung giờ này đã đầy'})
     }
     let hour = timeBook.split('@')[0].split(':')[0].trim()
