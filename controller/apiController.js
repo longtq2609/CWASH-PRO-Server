@@ -305,7 +305,6 @@ module.exports.cancelSchedule = async (req, res) => {
     // let user = await User.findById(req.user.id)
     let user = await User.find({role: 'Customer'})
     let staffs = await User.find({role: 'Staff'})
-    let name = req.body.name
     if (!user) {
         res.json({success: false, message: 'Không nhận dạng được người dùng. Vui lòng đăng nhập lại!'})
         return
@@ -326,7 +325,7 @@ module.exports.cancelSchedule = async (req, res) => {
     }, {new: true}).then((schedule) => {
         for (let staff of user) {
             if (staff.tokenDevice != null && staff.tokenDevice.length > 0) {
-                notify('Thông báo huỷ lịch', `Lịch đã huỷ lịch vì lý do ${note}`, req.user.tokenDevice)
+                notify('Thông báo huỷ lịch', `Lịch đã huỷ lịch vì lý do ${note}`, staff.tokenDevice)
             }
         }
         for (let staff of staffs) {
