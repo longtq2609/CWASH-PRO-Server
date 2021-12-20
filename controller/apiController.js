@@ -305,7 +305,7 @@ module.exports.cancelSchedule = async (req, res) => {
     // let user = await User.findById(req.user.id)
     let user = await User.find({role: 'Customer'})
     let staffs = await User.find({role: 'Staff'})
-    let timeBook = req.body.timeBook
+    let timeBook = req.body.time
 
     if (!user) {
         res.json({success: false, message: 'Không nhận dạng được người dùng. Vui lòng đăng nhập lại!'})
