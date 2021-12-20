@@ -325,7 +325,7 @@ module.exports.cancelSchedule = async (req, res) => {
     }, {new: true}).then((schedule) => {
         for (let staff of user) {
             if (staff.tokenDevice != null && staff.tokenDevice.length > 0) {
-                notify('Thông báo huỷ lịch', `Lịch đã huỷ lịch vì lý do ${note}`, staff.tokenDevice)
+                notify('Thông báo huỷ lịch', `Cửa hàng đã huỷ lịch vì lý do ${note}`, staff.tokenDevice)
             }
         }
         for (let staff of staffs) {
