@@ -325,13 +325,14 @@ module.exports.cancelSchedule = async (req, res) => {
             {status: 'Cancelled', note, idStaffConfirm: user._id, timeConfirm: new Date()}
     }, {new: true}).then((schedule) => {
         for (let staff of user) {
-            if (staff.tokenDevice != null && staff.tokenDevice.length > 0) {
-                notify('Thông báo huỷ lịch', ` đã huỷ lịch vì lý do ${note}`, req.user.tokenDevice)
-            }
+            notify('Thành công', 'Lịch của bạn đã được đặt. Vui lòng mang xe tới đúng giờ', req.user.tokenDevice)
+            // if (staff.tokenDevice != null && staff.tokenDevice.length > 0) {
+            //     notify('Thông báo huỷ lịch', `Lịch đã huỷ lịch vì lý do ${note}`, req.user.tokenDevice)
+            // }
         }
         for (let staff of staffs) {
             if (staff.tokenDevice != null && staff.tokenDevice.length > 0) {
-                notify('Thông báo huỷ lịch', `Khách hàng tên ${name} đã huỷ lịch vì lý do ${note}`, staff.tokenDevice)
+                notify('Thông báo huỷ lịch', `Khách hàng đã huỷ lịch vì lý do ${note}`, staff.tokenDevice)
             }
         }
         addNotify(`Lịch của bạn đã bị hủy`, schedule.idUser, schedule._id)
