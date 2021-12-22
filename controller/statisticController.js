@@ -25,7 +25,9 @@ module.exports.getStatistic = async (req, res) => {
                 }
             }
         }
-        res.render('statistic/statistics', {layout: 'temp/index', title: "Thống kê", err: false, countCar, countMoto})
+        let result = countMoto * 20000;
+        let resultCar = countCar * 50000;
+        res.render('statistic/statistics', {layout: 'temp/index', title: "Thống kê", err: false, resultCar, result})
     }).catch((err) => {
         res.render('error/404', {layout: 'temp/index', title: "Có lỗi xảy ra !", err: true, message: err})
     })
