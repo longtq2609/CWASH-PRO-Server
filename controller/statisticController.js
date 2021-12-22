@@ -6,10 +6,6 @@ module.exports.getStatistic = async (req, res) => {
     let timeEnd = req.query.timeEnd == undefined ? new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 0) : new Date(new Date(req.query.timeEnd).getFullYear(), new Date(req.query.timeEnd).getMonth(), new Date(req.query.timeEnd).getDate(), 23, 59, 0)
     let countCar = 0;
     let countMoto = 0;
-    let priceMoto = 20000;
-    let priceCar = 50000;
-    let totalPriceMoto = countMoto * priceMoto;
-    let totalPriceCar = countCar * priceCar;
     
     if (timeEnd < timeStart) {
         res.render('error/404', {
@@ -29,7 +25,7 @@ module.exports.getStatistic = async (req, res) => {
                 }
             }
         }
-        res.render('statistic/statistics', {layout: 'temp/index', title: "Thống kê", err: false, totalPriceCar, totalPriceMoto})
+        res.render('statistic/statistics', {layout: 'temp/index', title: "Thống kê", err: false, countCar, countMoto})
     }).catch((err) => {
         res.render('error/404', {layout: 'temp/index', title: "Có lỗi xảy ra !", err: true, message: err})
     })
