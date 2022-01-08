@@ -275,7 +275,7 @@ module.exports.schedule = async (req, res) => {
     let vehicle = req.body.vehicle
     let services = req.body.service
     let slSchedule = await Schedule.find({timeBook, status: "Pending"})
-    if (slSchedule.length = 2) {
+    if (slSchedule.length >= staffs.length) {
         return res.json({success: false, message: 'Khung giờ này đã đầy'})
     }
     let hour = timeBook.split('@')[0].split(':')[0].trim()
