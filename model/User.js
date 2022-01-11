@@ -30,6 +30,11 @@ let userSchema = new mongosee.Schema({
     tokenDevice: {
         type:String,
         default: ""
-    }
+    },
+    status: {
+        type:Boolean,
+        required:true,
+        default:true
+    },
 })
 module.exports = mongosee.model('User', userSchema,'user');
