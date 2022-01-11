@@ -123,7 +123,7 @@ module.exports.postAddUser = async (req, res) => {
     let passWord = md5("123456");
     let fullName = req.body.fullName;
     let address = req.body.address;
-    let add = new User({phoneNumber, passWord, fullName, address, role: "Staff", status: ""});
+    let add = new User({phoneNumber, passWord, fullName, address, role: "Staff", status: "s"});
     add.save().then(() => {
         res.redirect('/users')
     }, (err) => {
