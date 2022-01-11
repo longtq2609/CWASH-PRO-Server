@@ -32,7 +32,7 @@ let userSchema = new mongosee.Schema({
         default: ""
     },
     status: {
-        type:Boolean,
+        type:String,
         default:""
     },
 })
