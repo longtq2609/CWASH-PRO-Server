@@ -193,7 +193,7 @@ module.exports.deleteVehicleUser = async (req, res) => {
 module.exports.postUpdateUser = async (req, res) => {
     let id = req.params.id;
     await User.findById(id).then(async (user) => {
-        let {phoneNumber, fullName, address, role} = req.body;
+        let {phoneNumber, fullName, address, role, status} = req.body;
         if (phoneNumber.charAt(0) == 0) {
             phoneNumber = `+84${phoneNumber.substring(1, phoneNumber.length)}`
         }
@@ -227,7 +227,7 @@ module.exports.postUpdateUser = async (req, res) => {
         }
         await User.findOneAndUpdate({_id: id}, {
             $set: {
-                phoneNumber, fullName, address, role, avatar
+                phoneNumber, fullName, address, role, avatar, status
             }
         }, {new: true}).then(() => {
             res.redirect('/users');
