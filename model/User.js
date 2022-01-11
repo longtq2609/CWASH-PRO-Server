@@ -33,8 +33,7 @@ let userSchema = new mongosee.Schema({
     },
     status: {
         type:Boolean,
-        required:true,
-        default:true
+        default:""
     },
 })
 module.exports = mongosee.model('User', userSchema,'user');
