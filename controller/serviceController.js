@@ -1,6 +1,14 @@
 let Service = require('../model/Service')
 
-
+module.exports.getAllService = async (req, res) => {
+    await Service.find({}).then((data) => {
+        res.render('service/services', {layout: 'temp/index', title: "Dịch vụ", err: false, data})
+    }, (err) => {
+        res.render('error/404', {layout: 'temp/index', title: "Có lỗi xảy ra !", err: true, message: err})
+    }).catch((err) => {
+        res.render('error/404', {layout: 'temp/index', title: "Có lỗi xảy ra !", err: true, message: err})
+    })
+}
 module.exports.action = async (req, res) => {
     let perform = req.query.perform;
     if (perform === 'add') {
