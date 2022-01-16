@@ -25,7 +25,25 @@
             </tbody>
             <!--                modal delete-->
 
-
+            <div class="modal fade" id="d<%= data[i]._id %>" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Xác nhận</h5>
+                        </div>
+                        <div class="modal-body">
+                            Bạn có muốn xóa dịch vụ <%= data[i].name %> ?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                            <form action="/services/action?perform=delete&id=<%= data[i]._id %>" method="post">
+                            <button class="btn btn-danger" type="submit">Đồng ý</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!--                modal update-->
 
