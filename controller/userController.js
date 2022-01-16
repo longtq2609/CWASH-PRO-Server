@@ -90,6 +90,17 @@ module.exports.getAllStaff = async (req, res) => {
     })
 }
 
+module.exports.getVehicleUser = async (req, res) => {
+    let id = req.params.id;
+    await Vehicle.find({idUser: id}).then((data) => {
+        res.render('user/vehicles', {layout: 'temp/index', title: "Danh sách xe", err: false, data})
+    }, (err) => {
+        res.render('error/404', {layout: 'temp/index', title: "Có lỗi xảy ra !", err: true, message: err})
+    }).catch((err) => {
+        res.render('error/404', {layout: 'temp/index', title: "Có lỗi xảy ra !", err: true, message: err})
+    })
+}
+
 
 
 module.exports.deleteUser = async (req, res) => {
