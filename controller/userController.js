@@ -90,48 +90,7 @@ module.exports.getAllStaff = async (req, res) => {
     })
 }
 
-module.exports.getVehicleUser = async (req, res) => {
-    let id = req.params.id;
-    await Vehicle.find({idUser: id}).then((data) => {
-        res.render('user/vehicles', {layout: 'temp/index', title: "Danh sách xe", err: false, data})
-    }, (err) => {
-        res.render('error/404', {layout: 'temp/index', title: "Có lỗi xảy ra !", err: true, message: err})
-    }).catch((err) => {
-        res.render('error/404', {layout: 'temp/index', title: "Có lỗi xảy ra !", err: true, message: err})
-    })
-}
 
-module.exports.getAddUser = function (req, res) {
-    res.render('user/addUser', {layout: 'temp/index', title: 'Thêm nhân viên', err: false});
-}
-
-module.exports.postAddUser = async (req, res) => {
-    let phoneNumber = req.body.phoneNumber;
-    let user = await User.findOne({phoneNumber});
-    if (user) {
-        res.render('user/addUser', {
-            layout: 'temp/index',
-            title: 'Thêm nhân viên',
-            err: true,
-            message: `Số điện thoại đã được đăng kí`
-        });
-        return;
-    }
-    if (phoneNumber.charAt(0) == 0) {
-        phoneNumber = `+84${phoneNumber.substring(1, phoneNumber.length)}`
-    }
-    let passWord = md5("123456");
-    let fullName = req.body.fullName;
-    let address = req.body.address;
-    let add = new User({phoneNumber, passWord, fullName, address, role: "Staff", status: ""});
-    add.save().then(() => {
-        res.redirect('/users')
-    }, (err) => {
-        res.render('error/404', {layout: 'temp/index', title: "Có lỗi xảy ra !", err: true, message: err})
-    }).catch((err) => {
-        res.render('error/404', {layout: 'temp/index', title: "Có lỗi xảy ra !", err: true, message: err})
-    });
-}
 
 module.exports.deleteUser = async (req, res) => {
     let id = req.params.id;
