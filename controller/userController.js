@@ -70,7 +70,15 @@ module.exports.getAllUser = async (req, res) => {
     })
 }
 
-
+module.exports.getAllCustomer = async (req, res) => {
+    await User.find({role: 'Customer'}).then((data) => {
+        res.render('user/users', {layout: 'temp/index', title: "Danh sách người dùng", err: false, data})
+    }, (err) => {
+        res.render('error/404', {layout: 'temp/index', title: "Có lỗi xảy ra !", err: true, message: err})
+    }).catch((err) => {
+        res.render('error/404', {layout: 'temp/index', title: "Có lỗi xảy ra !", err: true, message: err})
+    })
+}
 
 module.exports.getAllStaff = async (req, res) => {
     await User.find({role: 'Staff'}).then((data) => {
