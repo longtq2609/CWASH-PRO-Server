@@ -1,0 +1,32 @@
+.bgLogin {
+    justify-content: center;
+    display: flex;
+    padding-top: 50px;
+}
+
+.loginText {
+    justify-content: center;
+    display: flex;
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 50px
+}
+
+.bgLoginForm {
+    flex-direction: column;
+    background-color: #EEEEEE;
+    width: 100%;
+    padding: 20px
+}
+
+.bgFormStyle {
+    flex-direction: column;
+    display: flex;
+    width: 100%
+}
+
+.bgButtonLogin {
+    justify-content: center;
+    display: flex;
+    margin-top: 10px
+}
