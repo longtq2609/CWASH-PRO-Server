@@ -11,46 +11,43 @@
                         <div class="col-lg-3">Số điện thoại</div>
                         <div class="col-lg-3">Hành động</div>
                     </div>
-                    <% for (let i = 0; i < data.length; i++) { %>
-                            <div class="container">
-                                <div class="row it ">
-                                    <div class="col-lg-3">
-                                        <img src="/<%= data[i].avatar %>" class="img" alt="Loading error" style="margin-right: 10px;">
-                                        <%= data[i].fullName %>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <% if (data[i].role=="Customer" ) { %>Khách hàng
-                                            <% } else if (data[i].role=="Staff" ) { %> Nhân viên
-                                                <% } else if (data[i].role=="Admin" ) { %> Quản lý
-                                                    <% } %>
-                                    </div>
-                                    <div class="col-lg-3"><%= data[i].phoneNumber %></div>
-                                    <div class="col-lg-3">
-                                        <a href="/users/update-user/<%= data[i]._id %>" class="btn "><img src="/images/edit.svg" alt=""></a>
-                                        <button data-toggle="modal" data-target="#d<%= data[i]._id %>" class="btn "><img src="/images/delete.svg" alt="">
-                                        </button>
-                                        <a href="/users/<%= data[i]._id %>/vehicles" class="btn btn-info">Danh sách xe</a>
-                                    </div>
+                    <% for (let i=0; i < data.length; i++) { %>
+                        <div class="container">
+                            <div class="row it ">
+                                <div class="col-lg-3"> <img src="/<%= data[i].avatar %>" class="img" alt="Loading error"
+                                        style="margin-right: 10px;">
+                                    <%= data[i].fullName %>
+                                </div>
+                                <div class="col-lg-3">
+                                    <% if (data[i].role=="Customer" ) { %>Khách hàng <% } else if (data[i].role=="Staff"
+                                            ) { %> Nhân viên <% } else if (data[i].role=="Admin" ) { %> Quản lý <% } %>
+                                </div>
+                                <div class="col-lg-2">
+                                    <%= data[i].phoneNumber %>
+                                </div>
+                                <div class="col-lg-4 "> <a href="/users/update-user/<%= data[i]._id %>"
+                                        class="btn "><img src="/images/edit.svg" alt=""></a> <button data-toggle="modal"
+                                        data-target="#d<%= data[i]._id %>" class="btn "><img src="/images/delete.svg"
+                                            alt=""> </button> <a href="/users/<%= data[i]._id %>/vehicles"
+                                        class="btn btn-info">Danh sách xe</a>
+                                    <p class="text-status">
+                                        <%= data[i].status %>
+                                    </p>
                                 </div>
                             </div>
-                        
-                </div>
-                <!--                modal delete-->
-
+                        </div>
+                </div> <!--                modal delete-->
                 <div class="modal fade" id="d<%= data[i]._id %>" tabindex="-1" role="dialog"
-                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLongTitle">Xác nhận</h5>
                             </div>
-                            <div class="modal-body">
-                                Bạn có muốn xóa người dùng <%= data[i].fullName %> ?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                                <a href="/users/delete-user/<%= data[i]._id %>" class="btn btn-danger">Đồng ý</a>
-                            </div>
+                            <div class="modal-body"> Bạn có muốn xóa người dùng <%= data[i].fullName %> ? </div>
+                            <div class="modal-footer"> <button type="button" class="btn btn-secondary"
+                                    data-dismiss="modal">Hủy</button> <a href="/users/delete-user/<%= data[i]._id %>"
+                                    class="btn btn-danger">Đồng ý</a> </div>
                         </div>
                     </div>
                 </div>
@@ -64,6 +61,7 @@
         border-radius: 50%;
         max-width: 50px;
     }
+
     .it {
         padding-bottom: 15px;
         margin-top: 15px;
@@ -72,8 +70,14 @@
         align-items: center;
         border-bottom: 1px solid #c5c7c9;
     }
+
     .container {
         padding: 0px;
     }
-</style> 
 
+    .text-status {
+        display: inline;
+        color: red;
+        margin-left: 50px;
+    }
+</style>
